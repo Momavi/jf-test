@@ -1,0 +1,44 @@
+@mixin text-template {
+  font-family: "Montserrat";
+  font-style: normal;
+}
+
+@mixin logo {
+  @include text-template;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  color: $colorLogo;
+}
+
+@mixin text-600-16px {
+  @include text-template;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: $colorText;
+}
+
+@mixin text-400-16px {
+  @include text-template;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: $colorText;
+}
+
+@mixin text-400-16px-lh20 {
+  @include text-template;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: $colorText;
+}
+
+@mixin text-400-14px {
+  @include text-template;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: $colorSubText;
+}
