@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import SidebarItem from "@/components/SidebarItem.vue";
+import Preloader from "@/components/Preloader.vue";
 
 const store = useStore();
 const searchText = ref("");
@@ -19,6 +20,9 @@ function searchEmployee(value) {
     <span class="sidebar-text">Результаты</span>
     <span v-if="store.state.employee.length">
       <SidebarItem />
+    </span>
+    <span class="sidebar-subtext" v-else-if="store.state.loading">
+      <Preloader />
     </span>
     <span class="sidebar-subtext" v-else-if="store.state.employee == []">начните поиск</span>
     <span class="sidebar-subtext" v-else>ничего не найдено</span>
