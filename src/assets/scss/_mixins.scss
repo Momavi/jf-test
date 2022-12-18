@@ -3,7 +3,7 @@
   font-style: normal;
 }
 
-@mixin logo {
+@mixin text-logo {
   @include text-template;
   font-weight: 700;
   font-size: 32px;
@@ -19,19 +19,19 @@
   color: $colorText;
 }
 
+@mixin text-600-14px {
+  @include text-template;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: $colorText;
+}
+
 @mixin text-400-16px {
   @include text-template;
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
-  color: $colorText;
-}
-
-@mixin text-400-16px-lh20 {
-  @include text-template;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
   color: $colorText;
 }
 
@@ -41,4 +41,16 @@
   font-size: 14px;
   line-height: 17px;
   color: $colorSubText;
+}
+
+@mixin active {
+  border-color: rgb(243, 5, 53);
+  outline: none;
+  transition: all 0.3s;
+}
+
+@mixin hover {
+  transform: scaleX(0.96);
+  opacity: 0.8;
+  transition: all 0.3s;
 }
