@@ -1,5 +1,5 @@
 <script setup>
-import SearchCard from "@/components/SearchCard.vue";
+import Card from "@/components/Card.vue";
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import SearchCard from "@/components/SearchCard.vue";
       <p class="header__text">Пользователь</p>
     </header>
     <main>
-      <SearchCard />
+      <Card />
     </main>
   </div>
 </template>
@@ -26,12 +26,12 @@ import SearchCard from "@/components/SearchCard.vue";
   align-items: center;
   justify-content: space-between;
   &__logo {
-    @include logo;
+    @include text-logo;
   }
   &__text {
-    @include text-400-16px-lh20;
+    @include text-400-16px;
     margin-top: 7px;
-    margin-right: 1px;
+    margin-right: 5px;
   }
 }
 </style>
