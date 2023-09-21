@@ -9,30 +9,27 @@ export default {
     data = data.replace(/ /g, "");
     commit("setLoading", true);
 
-    if (data.split(",").length > 1) {
-      // При вводе больше 1 имени в поиск отрабатывает это механизм
-      let arrayToOut = [];
-      for (let item of data.split(",")) {
-        await instance(`?username=${item}`)
-          .then((resp) => {
-            arrayToOut.unshift(resp.data[0]);
-          })
-          .catch((err) => {
-            return err;
-          });
-      }
-      commit("setLoading", false);
-      commit("setEmployee", arrayToOut);
-    } else {
-      // при одиночном поиске
-      await instance(`?username=${data}`)
-        .then((resp) => {
-          commit("setEmployee", resp.data);
+    try {
+      const dataArray = data.split(",");
+      const arrayToOut = await Promise.all(
+        dataArray.map(async (item) => {
+          if (Number.isInteger(Number(item))) {
+            // Если ввели Id
+            const response = await instance.get(`/${item}`);
+            return response.data;
+          } else {
+            // Если ввели имя
+            const response = await instance.get(`?username=${item}`);
+            return response.data[0];
+          }
         })
-        .catch((err) => {
-          return err;
-        });
-      commit("setLoaded", false);
+      );
+
+      commit("setEmployee", arrayToOut);
+    } catch (err) {
+      console.error("Error:", err);
+    } finally {
+      commit("setLoading", false);
     }
   },
 };

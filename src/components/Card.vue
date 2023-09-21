@@ -1,6 +1,6 @@
 <script setup>
 import CardContent from "@/components/CardContent.vue";
-import Sidebar from "@/components/Sidebar.vue";
+import Sidebar from "@/components/Sidebar.vue"
 </script>
 
 <template>
@@ -11,6 +11,7 @@ import Sidebar from "@/components/Sidebar.vue";
 </template>
 
 <style scoped lang="scss">
+/* Стили для внешнего контейнера карточки */
 .card {
   width: 100%;
   height: 575px;
@@ -18,6 +19,5 @@ import Sidebar from "@/components/Sidebar.vue";
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   display: flex;
-  padding-right: 0;
 }
 </style>

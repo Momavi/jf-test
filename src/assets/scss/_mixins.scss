@@ -50,7 +50,6 @@
 }
 
 @mixin hover {
-  transform: scaleX(0.96);
   opacity: 0.8;
   transition: all 0.3s;
 }

@@ -1,33 +1,32 @@
-<script setup>
-import { ref } from "vue";
-import { useStore } from "vuex";
-import SidebarItem from "@/components/SidebarItem.vue";
-import Preloader from "@/components/Preloader.vue";
-
-const store = useStore();
-const searchText = ref("");
-
-function searchEmployee(value) {
-  store.dispatch("getEmployee", value);
-}
-</script>
-
 <template>
   <div class="sidebar">
     <span class="sidebar-text">Поиск сотрудников</span>
-    <input v-model="searchText" @keyup.enter="searchEmployee(searchText)" type="text" class="sidebar-input"
-      placeholder="Введите Id или имя" />
+    <SidebarInput />
     <span class="sidebar-text">Результаты</span>
-    <span v-if="store.state.employee.length">
-      <SidebarItem />
-    </span>
-    <span class="sidebar-subtext" v-else-if="store.state.loading">
-      <Preloader />
-    </span>
-    <span class="sidebar-subtext" v-else-if="store.state.employee == []">начните поиск</span>
+    <Preloader v-if="isLoading" />
+    <SidebarItem v-else-if="isEmployees" />
+    <span class="sidebar-subtext" v-else-if="isEmptyState">начните поиск</span>
     <span class="sidebar-subtext" v-else>ничего не найдено</span>
   </div>
 </template>
+
+<script setup>
+import SidebarItem from "@/components/SidebarItem.vue";
+import SidebarInput from "@/components/SidebarInput.vue";
+import Preloader from "@/components/Preloader.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
+
+const store = useStore();
+
+const isEmployees = computed(
+  () =>
+    (store.state.employee.length > 0 && !!store.state.employee[0]) ||
+    store.state.employee.length > 1
+);
+const isLoading = computed(() => store.state.loading);
+const isEmptyState = computed(() => store.state.employee.length === 0);
+</script>
 
 <style scoped lang="scss">
 .sidebar {
@@ -40,26 +39,7 @@ function searchEmployee(value) {
 
   &-text {
     @include text-600-16px;
-  }
-
-  &-input {
-    width: 90%;
-    height: 42px;
-    margin: 15px 0 30px 0;
-    padding-left: 15px;
-    background: #ffffff;
-    border: 1.5px solid #e9ecef;
-    border-radius: 8px;
-    cursor: auto;
-    @include text-400-14px;
-
-    &:focus {
-      @include active;
-    }
-
-    &:hover {
-      @include hover;
-    }
+    margin-bottom: 16px;
   }
 
   &-subtext {

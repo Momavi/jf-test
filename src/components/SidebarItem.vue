@@ -5,20 +5,28 @@ import { useStore } from "vuex";
 const store = useStore();
 
 const selected = reactive({
-  id: 0
+  id: -1,
 });
 
-function setCurrentEmployee(item) {
-  selected.id = item.id
-  store.commit("setCurrentEmployee", item)
+function setCurrentEmployee(item, index) {
+  selected.id = index;
+  store.commit("setCurrentEmployee", item);
 }
 </script>
+
 <template>
-  <div v-for="(item, index) in store.state.employee" :key="index" class="item" @click="setCurrentEmployee(item)">
-    <img src="@/assets/image/template.png" />
-    <div class="item-text" :class="selected.id === item.id ? 'item-selected' : ''">
-      <span class="item-name" :class="selected.id === item.id ? 'item-selected-text' : ''">{{ item.username }}</span>
-      <span class="item-email">{{ item.email }}</span>
+  <div v-for="(item, index) in store.state.employee" :key="index">
+    <div class="item" @click="setCurrentEmployee(item, index)">
+      <img src="@/assets/image/template.png" />
+      <div
+        class="item-text"
+        :class="{ 'item-selected': selected.id === index }"
+      >
+        <span class="item-name">
+          {{ item ? item.username : "Не верное имя" }}
+        </span>
+        <span class="item-email">{{ item ? item.email : "" }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -27,7 +35,7 @@ function setCurrentEmployee(item) {
 .item {
   position: relative;
   display: flex;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   margin-right: 4px;
@@ -40,10 +48,10 @@ function setCurrentEmployee(item) {
 
   &-selected {
     width: 100%;
-    background: #E0E0E0;
+    background: #e0e0e0;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 0px 10px 10px 0px;
-    &-text{
+    & .item-name {
       margin-left: 12px;
     }
   }
@@ -55,12 +63,12 @@ function setCurrentEmployee(item) {
   }
 
   &-name {
+    @include text-600-14px;
     margin-bottom: 5px;
-    @include text-600-14px
   }
 
-  &-email{
-    @include text-400-14px
+  &-email {
+    @include text-400-14px;
   }
 }
 </style>
